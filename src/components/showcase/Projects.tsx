@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import software from '../../assets/pictures/projects/software.gif';
 import art from '../../assets/pictures/projects/art.gif';
@@ -21,7 +21,7 @@ const ProjectBox: React.FC<ProjectBoxProps> = ({
     route,
     iconStyle,
 }) => {
-    const [, setIsHovering] = useState(false);
+    const [, setIsHovering] = React.useState(false);
     const navigation = useNavigate();
 
     const handleClick = () => {
@@ -71,34 +71,26 @@ const Projects: React.FC<ProjectsProps> = (props) => {
             <h3>& Hobbies</h3>
             <br />
             <p>
-                Click on one of the areas below to check out some of my favorite
-                projects I've done in that field. I spent a lot of time to
-                include a lot of visuals and interactive media to showcase each
-                project. Enjoy!
+                I'm currently working on exciting projects in software development, music production, and digital art. My portfolio is growing, and I'm uploading new projects soon!
+            </p>
+            <br />
+            <p style={styles.comingSoon}>
+                <b>🎯 Projects Coming Soon!</b> Stay tuned for updates as I showcase my latest work in:
             </p>
             <br />
             <div style={styles.projectLinksContainer}>
-                <ProjectBox
-                    icon={software}
-                    iconStyle={styles.computerIcon}
-                    title="Software"
-                    subtitle="PROJECTS"
-                    route="software"
-                />
-                <ProjectBox
-                    icon={music}
-                    iconStyle={styles.musicIcon}
-                    title="Music"
-                    subtitle="VENTURES"
-                    route="music"
-                />
-                <ProjectBox
-                    icon={art}
-                    iconStyle={styles.artIcon}
-                    title="Art"
-                    subtitle="ENDEAVORS"
-                    route="art"
-                />
+                <div style={styles.placeholderBox}>
+                    <h2>💻 Software Projects</h2>
+                    <p>Coming Soon...</p>
+                </div>
+                <div style={styles.placeholderBox}>
+                    <h2>🎵 Music & Sound</h2>
+                    <p>Coming Soon...</p>
+                </div>
+                <div style={styles.placeholderBox}>
+                    <h2>🎨 Art & Design</h2>
+                    <p>Coming Soon...</p>
+                </div>
             </div>
         </div>
     );
@@ -148,6 +140,18 @@ const styles: StyleSheetCSS = {
     artIcon: {
         width: 21 * 2,
         height: 37 * 2,
+    },
+    placeholderBox: {
+        marginBottom: 24,
+        padding: 24,
+        border: '2px solid #ccc',
+        borderRadius: 8,
+        backgroundColor: '#f9f9f9',
+        textAlign: 'center',
+    },
+    comingSoon: {
+        fontSize: 16,
+        color: '#666',
     },
 };
 
