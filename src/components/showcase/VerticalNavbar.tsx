@@ -6,7 +6,6 @@ export interface VerticalNavbarProps {}
 
 const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
     const location = useLocation();
-    const [projectsExpanded, setProjectsExpanded] = useState(false);
     const [isHome, setIsHome] = useState(false);
 
     const navigate = useNavigate();
@@ -15,11 +14,6 @@ const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
     };
 
     useEffect(() => {
-        if (location.pathname.includes('/projects')) {
-            setProjectsExpanded(true);
-        } else {
-            setProjectsExpanded(false);
-        }
         if (location.pathname === '/') {
             setIsHome(true);
         } else {
@@ -38,42 +32,6 @@ const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
             <div style={styles.links}>
                 <Link containerStyle={styles.link} to="" text="HOME" />
                 <Link containerStyle={styles.link} to="about" text="ABOUT" />
-                <Link
-                    containerStyle={styles.link}
-                    to="experience"
-                    text="EXPERIENCE"
-                />
-                <Link
-                    containerStyle={Object.assign(
-                        {},
-                        styles.link,
-                        projectsExpanded && styles.expandedLink
-                    )}
-                    to="projects"
-                    text="PROJECTS"
-                />
-                {
-                    // if current path contains projects
-                    projectsExpanded && (
-                        <div style={styles.insetLinks}>
-                            <Link
-                                containerStyle={styles.insetLink}
-                                to="projects/software"
-                                text="SOFTWARE"
-                            />
-                            <Link
-                                containerStyle={styles.insetLink}
-                                to="projects/music"
-                                text="MUSIC"
-                            />
-                            <Link
-                                containerStyle={styles.insetLink}
-                                to="projects/art"
-                                text="ART"
-                            />
-                        </div>
-                    )
-                }
                 <Link
                     containerStyle={styles.link}
                     to="contact"
