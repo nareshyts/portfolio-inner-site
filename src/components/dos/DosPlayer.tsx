@@ -16,7 +16,7 @@ export default function DosPlayer(props: PlayerProps) {
     const [dos, setDos] = useState<Instance | null>(null);
 
     useEffect(() => {
-        if (rootRef === null || rootRef.current === null) {
+        if (rootRef.current === null) {
             return;
         }
 
@@ -33,7 +33,7 @@ export default function DosPlayer(props: PlayerProps) {
         return () => {
             instance.stop();
         };
-    }, [rootRef]);
+    }, []);
 
     useEffect(() => {
         if (dos !== null) {
