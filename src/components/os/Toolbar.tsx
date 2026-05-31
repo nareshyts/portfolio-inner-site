@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Colors from '../../constants/colors';
 import { Icon } from '../general';
 // import { } from '../general';
@@ -47,43 +47,42 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
     const [time, setTime] = useState(getTime());
 
-    const updateTime = () => {
+    const updateTime = useCallback(() => {
         setTime(getTime());
         setTimeout(() => {
             updateTime();
         }, 5000);
-    };
+    }, []);
 
     useEffect(() => {
         updateTime();
-    });
+    }, [updateTime]);
 
-    const onCheckClick = () => {
+    const onCheckClick = useCallback(() => {
         if (lastClickInside.current) {
             setStartWindowOpen(true);
         } else {
             setStartWindowOpen(false);
         }
         lastClickInside.current = false;
-    };
+    }, []);
 
     useEffect(() => {
         window.addEventListener('mousedown', onCheckClick, false);
         return () => {
             window.removeEventListener('mousedown', onCheckClick, false);
         };
-    }, []);
+    }, [onCheckClick]);
 
     const onStartWindowClicked = () => {
         setStartWindowOpen(true);
         lastClickInside.current = true;
     };
 
-    const toggleStartWindow = () => {
+    const handleStartButtonClick = () => {
+        setStartWindowOpen(!startWindowOpen);
         if (!startWindowOpen) {
             lastClickInside.current = true;
-        } else {
-            lastClickInside.current = false;
         }
     };
 
@@ -126,7 +125,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
                             styles.startContainerOuter,
                             startWindowOpen && styles.activeTabOuter
                         )}
-                        onMouseDown={toggleStartWindow}
+                        onMouseDown={handleStartButtonClick}
                     >
                         <div
                             style={Object.assign(
