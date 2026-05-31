@@ -33,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({ icon, text, onClick }) => {
         text && { padding: 4 }
     );
 
-    const click = (e: any) => {
+    const click = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         onClick && onClick();
     };
