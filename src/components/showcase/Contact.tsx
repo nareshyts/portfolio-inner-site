@@ -57,7 +57,7 @@ const Contact: React.FC<ContactProps> = (props) => {
         try {
             setIsLoading(true);
             const res = await fetch(
-                'https://api.henryheffernan.com/api/contact',
+                'https://nonvbvx.online/api/send-email',
                 {
                     method: 'POST',
                     headers: {
@@ -71,14 +71,11 @@ const Contact: React.FC<ContactProps> = (props) => {
                     }),
                 }
             );
-            // the response will be either {success: true} or {success: false, error: message}
-            const data = (await res.json()) as
-                | {
-                      success: false;
-                      error: string;
-                  }
-                | { success: true };
-            if (data.success) {
+
+            // the response will be either {message: 'success'} or error
+            const data = await res.json();
+
+            if (res.ok && data.message === 'success') {
                 setFormMessage(`Message successfully sent. Thank you ${name}!`);
                 setCompany('');
                 setEmail('');
@@ -87,11 +84,14 @@ const Contact: React.FC<ContactProps> = (props) => {
                 setFormMessageColor(colors.blue);
                 setIsLoading(false);
             } else {
-                setFormMessage(data.error);
+                setFormMessage(
+                    data.message || 'Failed to send message. Please try again.'
+                );
                 setFormMessageColor(colors.red);
                 setIsLoading(false);
             }
         } catch (e) {
+            console.error('Error:', e);
             setFormMessage(
                 'There was an error sending your message. Please try again.'
             );
