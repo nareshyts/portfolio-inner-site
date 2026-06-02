@@ -1,4 +1,3 @@
-name=Contact.tsx url=https://github.com/nareshyts/portfolio-inner-site/blob/d1614bda654ddc489371d3aab428aa21d4287739/src/components/showcase/Contact.tsx
 import React, { useEffect, useState } from 'react';
 import colors from '../../constants/colors';
 import twitterIcon from '../../assets/pictures/contact-twitter.png';
@@ -57,19 +56,21 @@ const Contact: React.FC<ContactProps> = (props) => {
         }
         try {
             setIsLoading(true);
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    company,
-                    email,
-                    name,
-                    message,
-                }),
-            });
-
+            const res = await fetch(
+                'https://api.henryheffernan.com/api/contact',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        company,
+                        email,
+                        name,
+                        message,
+                    }),
+                }
+            );
             // the response will be either {success: true} or {success: false, error: message}
             const data = (await res.json()) as
                 | {
@@ -77,7 +78,6 @@ const Contact: React.FC<ContactProps> = (props) => {
                       error: string;
                   }
                 | { success: true };
-
             if (data.success) {
                 setFormMessage(`Message successfully sent. Thank you ${name}!`);
                 setCompany('');
