@@ -56,6 +56,8 @@ const Contact: React.FC<ContactProps> = (props) => {
         }
         try {
             setIsLoading(true);
+            console.log('Sending form data:', { name, email, company, message });
+
             const res = await fetch(
                 'https://nonvbvx.online/api/send-email',
                 {
@@ -72,8 +74,11 @@ const Contact: React.FC<ContactProps> = (props) => {
                 }
             );
 
-            // the response will be either {message: 'success'} or error
+            console.log('Response status:', res.status);
+            console.log('Response OK:', res.ok);
+
             const data = await res.json();
+            console.log('Response data:', data);
 
             if (res.ok && data.message === 'success') {
                 setFormMessage(`Message successfully sent. Thank you ${name}!`);
@@ -82,18 +87,17 @@ const Contact: React.FC<ContactProps> = (props) => {
                 setName('');
                 setMessage('');
                 setFormMessageColor(colors.blue);
-                setIsLoading(false);
             } else {
                 setFormMessage(
-                    data.message || 'Failed to send message. Please try again.'
+                    data.error || data.message || 'Failed to send message. Please try again.'
                 );
                 setFormMessageColor(colors.red);
-                setIsLoading(false);
             }
+            setIsLoading(false);
         } catch (e) {
-            console.error('Error:', e);
+            console.error('Fetch Error:', e);
             setFormMessage(
-                'There was an error sending your message. Please try again.'
+                'Connection error. Make sure the backend server is running at nonvbvx.online'
             );
             setFormMessageColor(colors.red);
             setIsLoading(false);
